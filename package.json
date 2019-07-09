@@ -1,0 +1,32 @@
+{
+  "name": "koa-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cross-env NODE_ENV=production nodemon app",
+    "dev":"nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaosatufu/koa-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiaosatufu/koa-api/issues"
+  },
+  "homepage": "https://github.com/xiaosatufu/koa-api#readme",
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-json-error": "^3.1.2",
+    "koa-router": "^7.4.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "nodemon": "^1.19.1"
+  }
+}
