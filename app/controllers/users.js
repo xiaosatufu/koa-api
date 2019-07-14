@@ -6,7 +6,7 @@ class UsersCtl {
         ctx.body = await User.find()
     }
     async findById(ctx) {
-        const { fields } = ctx.query
+        const { fields = '' } = ctx.query
         // console.log(fields)
         const selectFields = fields.split(';').filter(f => f).map(f => ' +' + f).join('')
         // console.log(selectFields)
