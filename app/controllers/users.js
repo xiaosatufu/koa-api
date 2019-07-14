@@ -111,7 +111,6 @@ class UsersCtl {
     }
 
     async follow(ctx) {
-
         const me = await User.findById(ctx.state.user._id).select('+following')
         if (!me.following.map(id => id.toString()).includes(ctx.params.id)) {
             me.following.push(ctx.params.id)
@@ -124,6 +123,33 @@ class UsersCtl {
         const index = me.following.map(id => id.toString()).indexOf(ctx.params.id)
         if (index > -1) {
             me.following.splice(index, 1)
+            me.save()
+        }
+        ctx.status = 204;
+    }
+
+    async listFollowingTopics(ctx) {
+        const user = await User.findById(ctx.params.id).select('+followingTopics').populate('followingTopics')
+        if (!user) {
+            ctx.throw(404,'用户不存在')
+        }
+        ctx.body = user.followingTopics
+    }
+    
+    async followTopic(ctx) {
+        // ctx.body = '111'
+        const me = await User.findById(ctx.state.user._id).select('+followingTopics')
+        if (!me.followingTopics.map(id => id.toString()).includes(ctx.params.id)) {
+            me.followingTopics.push(ctx.params.id)
+            me.save()
+        }
+        ctx.status = 204;
+    }
+    async unfollowTopic(ctx) {
+        const me = await User.findById(ctx.state.user._id).select('+followingTopics')
+        const index = me.followingTopics.map(id => id.toString()).indexOf(ctx.params.id)
+        if (index > -1) {
+            me.followingTopics.splice(index, 1)
             me.save()
         }
         ctx.status = 204;
