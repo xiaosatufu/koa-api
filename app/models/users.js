@@ -4,16 +4,17 @@ const userSchema = new Schema({
     __v:{type:Number,select:false},
     name: { type: String, required: true },
     password: { type: String, required: false, select: false },
-    avatar_url:{type:String},
+    avatar_url:{type:String,select:false},
     gender:{type:String,enum:['male','female'],default:'male',required:true},
     headline:{type:String},
-    locations:{type:[{type:String}]},
-    business:{type:String},
+    locations:{type:[{type:String}],select:false},
+    business:{type:String,select:false},
     employments:{
         type:[{
             company:{type:String},
             job:{type:String}
-        }]
+        }],
+        select:false
     },
     educations:{
         type:[
@@ -24,7 +25,8 @@ const userSchema = new Schema({
                 entrance_year:{type:Number},
                 graduation_year:{type:Number}
             }
-        ]
+        ],
+        select:false
     }
 })
 
