@@ -13,9 +13,22 @@ class UsersCtl {
     async findById(ctx) {
         const { fields = '' } = ctx.query
         // console.log(fields)
-        const selectFields = fields.split(';').filter(f => f).map(f => ' +' + f).join('')
+        const selectFields = fields.split(';')
+            .filter(f => f)
+            .map(f => ' +' + f).join('')
         // console.log(selectFields)
-        const user = await User.findById(ctx.params.id).select(selectFields)
+        const populateStr = fields.split(';').filter(f => f).map(f => {
+            if (f === 'employments') {
+                return 'employments.company employment.job'
+            }
+            if (f === 'educations') {
+                return ' educations.school educations.major'
+            }
+            return f
+        }).join(' ')
+        const user = await User.findById(ctx.params.id)
+            .select(selectFields)
+            .populate(populateStr)
         if (!user) { ctx.throw(404) }
         ctx.body = user
     }
