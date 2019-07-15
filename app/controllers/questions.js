@@ -21,7 +21,7 @@ class QuestionsCtl {
     async findById(ctx) {
         const { fields = '' } = ctx.query
         const selectFields = fields.split(';').filter(f => f).map(f => ' +' + f).join('')
-        const question = await Question.findById(ctx.params.id).select(selectFields).populate('questioner')
+        const question = await Question.findById(ctx.params.id).select(selectFields).populate('questioner topics')
         ctx.body = question
     }
     async create(ctx) {
