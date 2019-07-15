@@ -172,7 +172,7 @@ class UsersCtl {
         ctx.body = user.likingAnswers
     }
 
-    async likeAnswer(ctx) {
+    async likeAnswer(ctx,next) {
         const me = await User.findById(ctx.state.user._id).select('+likingAnswers')
         if (!me.likingAnswers.map(id => id.toString()).includes(ctx.params.id)) {
             me.likingAnswers.push(ctx.params.id)
@@ -180,6 +180,7 @@ class UsersCtl {
             await Answer.findByIdAndUpdate(ctx.params.id, { $inc: { voteCount: 1 } })
         }
         ctx.status = 204;
+        await next()
     }
     async unlikeAnswer(ctx) {
         const me = await User.findById(ctx.state.user._id).select('+likingAnswers')
@@ -203,13 +204,14 @@ class UsersCtl {
         ctx.body = user.dislikingAnswers
     }
 
-    async dislikeAnswer(ctx) {
+    async dislikeAnswer(ctx,next) {
         const me = await User.findById(ctx.state.user._id).select('+dislikingAnswers')
         if (!me.dislikingAnswers.map(id => id.toString()).includes(ctx.params.id)) {
             me.dislikingAnswers.push(ctx.params.id)
             me.save()
         }
         ctx.status = 204;
+        await next()
     }
     async undislikeAnswer(ctx) {
         const me = await User.findById(ctx.state.user._id).select('+dislikingAnswers')
