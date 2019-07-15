@@ -14,7 +14,7 @@ class AnswersCtl {
         if (!answer) {
             ctx.throw(404, '答案不存在')
         }
-        if (answer.questionId !== ctx.params.questionId) {
+        if (ctx.params.questionId && answer.questionId !== ctx.params.questionId) {
             ctx.throw(404, '该问题下没有此答案')
         }
         ctx.state.answer = answer
